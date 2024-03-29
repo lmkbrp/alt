@@ -1,0 +1,43 @@
+<script>
+
+
+  
+  function isWeekday() {
+    
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
+    return dayOfWeek >= 1 && dayOfWeek <= 5; // Monday to Friday
+  }
+
+  function isTimeInRange() {
+    const now = new Date();
+    const startHour = 8;
+    const endHour = 17;
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    return isWeekday() && currentHour >= startHour && currentHour <= endHour && (currentHour !== endHour || currentMinute === 0);
+  }
+
+  function reloadPage() {
+    
+    location.reload();
+
+  }
+
+  function scheduleReload() {
+    document.documentElement.style.overflow = 'hidden';
+    setInterval(function() {
+      if (isTimeInRange()) {
+        
+        reloadPage();
+        
+      }
+    }, 45 * 60 * 1000); // 45 minutes in milliseconds
+  }
+
+ window.onload = scheduleReload;
+  
+</script>
+<iframe style=" transform: scale(0.94); position:absolute; top:1.4%;left:-6%; display:flex" id='st_e0f6ace58ff24491ba476ea006343c9b' frameBorder='0' scrolling='no' width='200%' height='200%'src='https://api.stockdio.com/visualization/financial/charts/v1/Ticker?app-key=2581A2BFDC7D47E1826913713B7A6F8B&stockExchange=TSX&symbols=NVDA:CA;RY;TD;IFC&scroll=No&palette=Brown-Sugar&layoutType=13&backgroundColor=00000000&onload=st_e0f6ace58ff24491ba476ea006343c9b'></iframe>
+
+ 
