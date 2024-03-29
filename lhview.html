@@ -1,0 +1,43 @@
+<script>
+
+
+  
+  function isWeekday() {
+    
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
+    return dayOfWeek >= 1 && dayOfWeek <= 5; // Monday to Friday
+  }
+
+  function isTimeInRange() {
+    const now = new Date();
+    const startHour = 8;
+    const endHour = 17;
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    return isWeekday() && currentHour >= startHour && currentHour <= endHour && (currentHour !== endHour || currentMinute === 0);
+  }
+
+  function reloadPage() {
+    
+    location.reload();
+
+  }
+
+  function scheduleReload() {
+    document.documentElement.style.overflow = 'hidden';
+    setInterval(function() {
+      if (isTimeInRange()) {
+        
+        reloadPage();
+        
+      }
+    }, 60 * 60 * 1000); // 60 minutes in milliseconds
+  }
+
+ window.onload = scheduleReload;
+  
+</script>
+
+
+<iframe style="transform: scale(0.94); position:absolute; top:2%;left:-7%; display:inline-block" id='st_67fb7419f08942ea99a62626fa6adb0b' frameBorder='0' scrolling='no' width='100%' height='100%' src='https://api.stockdio.com/visualization/financial/charts/v1/Ticker?app-key=2581A2BFDC7D47E1826913713B7A6F8B&stockExchange=CSE&symbols=CSU;TOI;GSY;NVEI&scroll=No&palette=Financial-Light&layoutType=13&onload=st_67fb7419f08942ea99a62626fa6adb0b'></iframe>
