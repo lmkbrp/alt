@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+  }
+
+  /* 🔧 Adjust ONLY this scale value */
+  .scale-wrapper {
+    transform: scale(0.8);              /* 👈 change this */
+    transform-origin: top left;
+    width: 125%;                       /* 100 / 0.88 */
+    height: 125%;
+  }
+
+  iframe {
+    border: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+</head>
+
+<body>
+
+<script>
+  document.documentElement.style.overflow = 'hidden';
+  setTimeout(searchTextOnPage, 7200000);
+
+  function searchTextOnPage() {
+    var searchText = "License";
+
+    var pageText = document.body.innerText || document.body.textContent;
+    var searchTextLower = searchText.toLowerCase();
+    var pageTextLower = pageText.toLowerCase();
+
+    var iframe = document.getElementById("st_e0f6ace58ff24491ba476ea006343c9b");
+
+    if (!iframe) return;
+
+    if (pageTextLower.includes(searchTextLower)) {
+      iframe.style.visibility = "hidden";
+    } else {
+      iframe.style.visibility = "visible";
+    }
+  }
+
+  function isWeekday() {
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+    return dayOfWeek >= 1 && dayOfWeek <= 5;
+  }
+
+  function isTimeInRange() {
+    const now = new Date();
+    const startHour = 8;
+    const endHour = 17;
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+
+    return (
+      isWeekday() &&
+      currentHour >= startHour &&
+      currentHour <= endHour &&
+      (currentHour !== endHour || currentMinute === 0)
+    );
+  }
+
+  function reloadPage() {
+    location.reload();
+  }
+
+  function scheduleReload() {
+    setInterval(function () {
+      if (isTimeInRange()) {
+        reloadPage();
+      }
+    }, 60 * 60 * 1000); // reload every 60 minutes
+  }
+
+  scheduleReload();
+</script>
+
+<div class="scale-wrapper">
+  <iframe
+    id="st_e0f6ace58ff24491ba476ea006343c9b"
+    scrolling="no"
+    src="https://api.stockdio.com/visualization/financial/charts/v1/Ticker?app-key=C325BA8DF99543CC851C35C2CB330ACE&stockExchange=TSX&symbols=XEQT;CPX;ZSP;RY;CCO&scroll=Yes&palette=Brown-Sugar&layoutType=13&backgroundColor=00000000">
+  </iframe>
+</div>
+
+</body>
+</html>
