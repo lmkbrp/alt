@@ -17,7 +17,7 @@
   .scale-wrapper {
     transform: scale(0.8);              /* 👈 change this */
     transform-origin: top left;
-    width: 125%;                       /* 100 / 0.88 */
+    width: 125%;
     height: 125%;
   }
 
@@ -38,15 +38,14 @@
   function searchTextOnPage() {
     var searchText = "License";
 
-    var pageText = document.body.innerText || document.body.textContent;
-    var searchTextLower = searchText.toLowerCase();
+    // ✅ Only use innerText (prevents matching text inside <script>)
+    var pageText = document.body.innerText || "";
     var pageTextLower = pageText.toLowerCase();
 
     var iframe = document.getElementById("st_e0f6ace58ff24491ba476ea006343c9b");
-
     if (!iframe) return;
 
-    if (pageTextLower.includes(searchTextLower)) {
+    if (pageTextLower.includes(searchText.toLowerCase())) {
       iframe.style.visibility = "hidden";
     } else {
       iframe.style.visibility = "visible";
@@ -83,7 +82,7 @@
       if (isTimeInRange()) {
         reloadPage();
       }
-    }, 30 * 60 * 1000); // reload every 60 minutes
+    }, 30 * 60 * 1000); // reload every 30 minutes
   }
 
   scheduleReload();
@@ -99,3 +98,4 @@
 
 </body>
 </html>
+
