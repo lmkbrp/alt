@@ -57,20 +57,28 @@
     );
   }
 
-  function updateIframe() {
-    const iframe = document.getElementById("st_e0f6ace58ff24491ba476ea006343c9b");
-    if (!iframe) return;
+function updateIframe() {
+  const iframe = document.getElementById("st_e0f6ace58ff24491ba476ea006343c9b");
+  if (!iframe) return;
 
-    if (isTimeInRange()) {
-      if (iframe.getAttribute("src") !== stockUrl) {
-        iframe.setAttribute("src", stockUrl);
-      }
-      iframe.style.visibility = "visible";
-    } else {
-      iframe.removeAttribute("src");
-      iframe.style.visibility = "hidden";
-    }
+  const currentSrc = iframe.getAttribute("src");
+
+  // If blank, load it once — even on weekends/outside hours
+  if (!currentSrc) {
+    iframe.setAttribute("src", stockUrl);
+    iframe.style.visibility = "visible";
+    return;
   }
+
+  // If already loaded, leave it alone outside market hours
+  if (!isTimeInRange()) {
+    iframe.style.visibility = "visible";
+    return;
+  }
+
+  // During market hours, keep it visible
+  iframe.style.visibility = "visible";
+}
 
   function scheduleReload() {
     setInterval(function () {
