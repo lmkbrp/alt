@@ -13,9 +13,8 @@
     background: transparent;
   }
 
-  /* 🔧 Adjust ONLY this scale value */
   .scale-wrapper {
-    transform: scale(0.8);              /* 👈 change this */
+    transform: scale(0.8);
     transform-origin: top left;
     width: 140%;
     height: 125%;
@@ -30,6 +29,13 @@
 </head>
 
 <body>
+
+<div class="scale-wrapper">
+  <iframe
+    id="st_e0f6ace58ff24491ba476ea006343c9b"
+    scrolling="no">
+  </iframe>
+</div>
 
 <script>
   document.documentElement.style.overflow = 'hidden';
@@ -57,28 +63,20 @@
     );
   }
 
-function updateIframe() {
-  const iframe = document.getElementById("st_e0f6ace58ff24491ba476ea006343c9b");
-  if (!iframe) return;
+  function updateIframe() {
+    const iframe = document.getElementById("st_e0f6ace58ff24491ba476ea006343c9b");
+    if (!iframe) return;
 
-  const currentSrc = iframe.getAttribute("src");
+    const currentSrc = iframe.getAttribute("src");
 
-  // If blank, load it once — even on weekends/outside hours
-  if (!currentSrc) {
-    iframe.setAttribute("src", stockUrl);
+    if (!currentSrc) {
+      iframe.setAttribute("src", stockUrl);
+      iframe.style.visibility = "visible";
+      return;
+    }
+
     iframe.style.visibility = "visible";
-    return;
   }
-
-  // If already loaded, leave it alone outside market hours
-  if (!isTimeInRange()) {
-    iframe.style.visibility = "visible";
-    return;
-  }
-
-  // During market hours, keep it visible
-  iframe.style.visibility = "visible";
-}
 
   function scheduleReload() {
     setInterval(function () {
@@ -88,22 +86,11 @@ function updateIframe() {
     }, 30 * 60 * 1000);
   }
 
-  // Initial load
   updateIframe();
-
-  // Periodic reloads (only during active time)
   scheduleReload();
 </script>
 
-<div class="scale-wrapper">
-<iframe
-  id="st_e0f6ace58ff24491ba476ea006343c9b"
-  scrolling="no">
-</iframe>
-</div>
-
 </body>
 </html>
-
 
 
